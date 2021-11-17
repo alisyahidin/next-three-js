@@ -50,7 +50,7 @@ const Material: NextPage = () => {
         </mesh>
       ))}
       <gridHelper />
-      <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, .01, 0]}>
+      <mesh receiveShadow rotation-x={-Math.PI / 2} position={[0, .01, 0]}>
         <planeGeometry args={[33, 8]} />
         <meshStandardMaterial color={0xFFFFFF} />
       </mesh>
