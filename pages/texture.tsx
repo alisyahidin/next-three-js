@@ -9,7 +9,7 @@ const Box = dynamic(() => import('../components/BoxTexture'), { ssr: false })
 const TexturePage: NextPage = () => {
   return (
     <Canvas style={{ height: '100vh' }}>
-      <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} maxDistance={15} minDistance={3} />
+      <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} maxDistance={10} minDistance={6} />
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
       <Suspense fallback={null}>

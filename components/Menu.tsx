@@ -1,0 +1,38 @@
+import Link from 'next/link'
+
+const menus = [
+  {
+    title: 'Home',
+    path: '/',
+  },
+  {
+    title: 'Download Zip',
+    path: '/download-zip',
+  },
+  {
+    title: 'Material',
+    path: '/material',
+  },
+  {
+    title: 'SceneGraph',
+    path: '/scenegraph',
+  },
+  {
+    title: 'Shoe',
+    path: '/shoe',
+  },
+  {
+    title: 'Texture',
+    path: '/texture',
+  },
+]
+
+const Menu = () => {
+  return (
+    <ul className="menu">
+      {menus.map(menu => (<li key={menu.path}><Link href={menu.path}><a>{menu.title}</a></Link></li>))}
+    </ul>
+  )
+}
+
+export default Menu
