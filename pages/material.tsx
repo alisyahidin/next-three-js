@@ -43,7 +43,7 @@ const Material: NextPage = () => {
       <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} maxDistance={15} minDistance={1} />
       <ambientLight />
       <pointLight castShadow position={[5, 10, 4]} />
-      <axesHelper />
+      <axesHelper scale={3} position={[0, 0.2, 0]} />
       {objects.map((Component, i) => (
         <mesh castShadow position={[(i * 3) - (3 * (objects.length / 2)), 2, 0]} key={i}>
           {Component}

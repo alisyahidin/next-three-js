@@ -8,9 +8,10 @@ const Home: NextPage = () => {
     <Canvas style={{ height: '100vh' }}>
       <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} maxDistance={15} minDistance={3} />
       <ambientLight />
+      <axesHelper position={[0, 0, 0]} />
       <pointLight position={[10, 10, 10]} />
-      <Box position={[-1.2, 0, 0]} />
-      <Box position={[1.2, 0, 0]} />
+      <Box position={[-2, 0, 0]} />
+      <Box position={[2, 0, 0]} />
       <Stats />
     </Canvas>
   )

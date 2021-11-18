@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 const menus = [
@@ -25,12 +26,17 @@ const menus = [
     title: 'Texture',
     path: '/texture',
   },
+  {
+    title: 'React Spring',
+    path: '/react-spring',
+  },
 ]
 
 const Menu = () => {
+  const { pathname } = useRouter()
   return (
     <ul className="menu">
-      {menus.map(menu => (<li key={menu.path}><Link href={menu.path}><a>{menu.title}</a></Link></li>))}
+      {menus.map(menu => (<li key={menu.path}><Link href={menu.path}><a style={{ textDecoration: pathname === menu.path ? 'underline' : 'none' }}>{menu.title}</a></Link></li>))}
     </ul>
   )
 }
