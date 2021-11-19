@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-spring/three": "^9.3.0",
+    "@react-three/cannon": "^4.0.1",
     "@react-three/drei": "^7.20.1",
     "@react-three/fiber": "^7.0.17",
     "exceljs": "^4.3.0",
@@ -22,6 +23,7 @@
     "valtio": "^1.2.5"
   },
   "devDependencies": {
+    "@types/cannon": "^0.1.7",
     "@types/file-saver": "^2.0.3",
     "@types/react": "17.0.33",
     "@types/three": "^0.133.1",

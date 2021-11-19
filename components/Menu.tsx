@@ -30,6 +30,10 @@ const menus = [
     title: 'React Spring',
     path: '/react-spring',
   },
+  {
+    title: 'Canon',
+    path: '/cannon',
+  },
 ]
 
 const Menu = () => {

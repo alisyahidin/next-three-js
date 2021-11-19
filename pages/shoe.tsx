@@ -2,7 +2,7 @@ import { FC, Suspense, useRef } from 'react'
 import type { NextPage } from 'next'
 import { GLTF } from 'three-stdlib'
 import { Canvas } from '@react-three/fiber'
-import { ContactShadows, OrbitControls, Stats, useGLTF } from '@react-three/drei'
+import { ContactShadows, Html, OrbitControls, Stats, useGLTF, useProgress } from '@react-three/drei'
 
 type DreiGLTF = GLTF & {
   nodes: Record<string, THREE.Mesh>
@@ -28,13 +28,20 @@ const ShoeMesh: FC = props => {
   )
 }
 
+const Loader = () => {
+  const { progress } = useProgress()
+  return <Html center>
+    <progress value={progress} />
+  </Html>
+}
+
 const Shoe: NextPage = () => {
   return (
     <Canvas style={{ height: '100vh' }}>
       <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} maxDistance={5} minDistance={3} />
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
-      <Suspense fallback={<></>}>
+      <Suspense fallback={<Loader />}>
         <ShoeMesh />
         <ContactShadows rotation-x={Math.PI / 2} position={[0, -0.8, 0]} opacity={0.25} width={10} height={10} blur={1.5} far={0.8} />
       </Suspense>
