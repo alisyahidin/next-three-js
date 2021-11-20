@@ -34,6 +34,10 @@ const menus = [
     title: 'Canon',
     path: '/cannon',
   },
+  {
+    title: 'Rubik',
+    path: '/rubik',
+  },
 ]
 
 const Menu = () => {
