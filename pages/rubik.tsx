@@ -1,11 +1,19 @@
-import { FC, useRef, useEffect } from 'react'
+import { useRef, useEffect, useState, useImperativeHandle, forwardRef } from 'react'
 import type { NextPage } from 'next'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls, Stats } from '@react-three/drei'
+import { Group } from 'three'
+import styles from '../styles/rubik.module.css'
+
+const ceil = (num: number): number => Math.ceil(num * 100) / 100
 
 type RubikProps = {
   size: number
   length?: number
+}
+
+type RubikActions = {
+  handleRotateFront: () => void
 }
 
 const colors = {
@@ -18,10 +26,24 @@ const colors = {
   netral: 0x000000
 }
 
-const Rubik: FC<RubikProps> = ({ size = 3, length = 1 }) => {
+const Rubik = forwardRef<RubikActions, RubikProps>(({ size = 3, length = 1 }, ref) => {
+  const { scene } = useThree()
   const rubik = useRef<THREE.Mesh>(null!)
-  const gap = length / 5
+  const pivot = useRef(new Group())
+  const [rotation, setRotation] = useState<'F' | null>(null)
+  const gap = length / 10
   const offset = (-size / 2) + 0.5 - gap
+
+  const handleRotateFront = () => {
+    scene.add(pivot.current)
+    const front = rubik.current.children.filter(cube => /[0-9]-[0-9]-2/.test(cube.name))
+    front.forEach(cube => pivot.current.add(cube))
+    setRotation('F')
+  }
+
+  useImperativeHandle(ref, () => ({
+    handleRotateFront
+  }))
 
   useEffect(() => {
     const front = rubik.current.children.filter(cube => /[0-9]-[0-9]-2/.test(cube.name))
@@ -29,7 +51,12 @@ const Rubik: FC<RubikProps> = ({ size = 3, length = 1 }) => {
   }, [rubik])
 
   useFrame(() => {
-    rubik.current.rotation.z += 0.01
+    if (rotation === 'F') {
+      pivot.current.rotation.z -= 0.01
+
+      console.log(ceil(pivot.current.rotation.z))
+      if (ceil(pivot.current.rotation.z) % ceil(-Math.PI / 2) === 0) setRotation(null)
+    }
   })
 
   return <group ref={rubik}>
@@ -53,18 +80,24 @@ const Rubik: FC<RubikProps> = ({ size = 3, length = 1 }) => {
       )
     )}
   </group>
-}
+})
 
 const RubikPage: NextPage = () => {
-
+  const rubik = useRef<RubikActions>(null!)
   return (
-    <Canvas style={{ height: '100vh' }}>
-      <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} maxDistance={15} minDistance={3} />
-      <ambientLight />
-      <axesHelper scale={6} position={[0, 0, 0]} />
-      <Rubik size={3} length={0.5} />
-      <Stats />
-    </Canvas>
+    <>
+      <Canvas style={{ height: '100vh' }}>
+        <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} maxDistance={15} minDistance={3} />
+        <ambientLight />
+        <axesHelper scale={6} position={[0, 0, 0]} />
+        <Rubik ref={rubik} size={3} length={0.5} />
+        <Stats />
+      </Canvas>
+      <div className={styles['button-action']}>
+        <button onClick={() => console.log(rubik.current.handleRotateFront())} className={styles.btn}>F</button>
+        <button onClick={() => console.log('Test')} className={styles.btn}>F'</button>
+      </div>
+    </>
   )
 }
 
