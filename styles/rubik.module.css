@@ -8,6 +8,12 @@
   z-index: 1;
 }
 
+.button-action div {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .btn {
   height: 30px;
   width: 40px;

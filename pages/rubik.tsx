@@ -1,89 +1,13 @@
-import { useRef, useEffect, useState, useImperativeHandle, forwardRef } from 'react'
+import { useRef } from 'react'
 import type { NextPage } from 'next'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Stats } from '@react-three/drei'
-import { Group } from 'three'
+import Rubik, { RubikRef } from '../components/Rubik'
 import styles from '../styles/rubik.module.css'
 
-const ceil = (num: number): number => Math.ceil(num * 100) / 100
-
-type RubikProps = {
-  size: number
-  length?: number
-}
-
-type RubikActions = {
-  handleRotateFront: () => void
-}
-
-const colors = {
-  front: 0xFFFFFF,
-  back: 0xFFCC00,
-  up: 0xCC0000,
-  bottom: 0xEE6600,
-  right: 0x009922,
-  left: 0x2255DD,
-  netral: 0x000000
-}
-
-const Rubik = forwardRef<RubikActions, RubikProps>(({ size = 3, length = 1 }, ref) => {
-  const { scene } = useThree()
-  const rubik = useRef<THREE.Mesh>(null!)
-  const pivot = useRef(new Group())
-  const [rotation, setRotation] = useState<'F' | null>(null)
-  const gap = length / 10
-  const offset = (-size / 2) + 0.5 - gap
-
-  const handleRotateFront = () => {
-    scene.add(pivot.current)
-    const front = rubik.current.children.filter(cube => /[0-9]-[0-9]-2/.test(cube.name))
-    front.forEach(cube => pivot.current.add(cube))
-    setRotation('F')
-  }
-
-  useImperativeHandle(ref, () => ({
-    handleRotateFront
-  }))
-
-  useEffect(() => {
-    const front = rubik.current.children.filter(cube => /[0-9]-[0-9]-2/.test(cube.name))
-    console.log(front)
-  }, [rubik])
-
-  useFrame(() => {
-    if (rotation === 'F') {
-      pivot.current.rotation.z -= 0.01
-
-      console.log(ceil(pivot.current.rotation.z))
-      if (ceil(pivot.current.rotation.z) % ceil(-Math.PI / 2) === 0) setRotation(null)
-    }
-  })
-
-  return <group ref={rubik}>
-    {[...Array(size)].map((_, x) =>
-      [...Array(size)].map((_, y) =>
-        [...Array(size)].map((_, z) => (
-          <mesh
-            key={`${x}-${y}-${z}`}
-            name={`${x}-${y}-${z}`}
-            position={[(x + (x * gap) + offset) * length, (y + (y * gap) + offset) * length, (z + (z * gap) + offset) * length]}
-          >
-            <boxGeometry args={[length, length, length]} />
-            <meshStandardMaterial attachArray="material" color={x === size - 1 ? colors.right : colors.netral} />
-            <meshStandardMaterial attachArray="material" color={x === 0 ? colors.left : colors.netral} />
-            <meshStandardMaterial attachArray="material" color={y === size - 1 ? colors.up : colors.netral} />
-            <meshStandardMaterial attachArray="material" color={y === 0 ? colors.bottom : colors.netral} />
-            <meshStandardMaterial attachArray="material" color={z === size - 1 ? colors.front : colors.netral} />
-            <meshStandardMaterial attachArray="material" color={z === 0 ? colors.back : colors.netral} />
-          </mesh>
-        ))
-      )
-    )}
-  </group>
-})
-
 const RubikPage: NextPage = () => {
-  const rubik = useRef<RubikActions>(null!)
+  const rubik = useRef<RubikRef>(null!)
+
   return (
     <>
       <Canvas style={{ height: '100vh' }}>
@@ -94,8 +18,42 @@ const RubikPage: NextPage = () => {
         <Stats />
       </Canvas>
       <div className={styles['button-action']}>
-        <button onClick={() => console.log(rubik.current.handleRotateFront())} className={styles.btn}>F</button>
-        <button onClick={() => console.log('Test')} className={styles.btn}>F'</button>
+        <div>
+          <button onClick={() => rubik.current.rotate('F')} className={styles.btn}>F</button>
+          <button onClick={() => rubik.current.rotate('F', true)} className={styles.btn}>F'</button>
+        </div>
+        <div>
+          <button onClick={() => rubik.current.rotate('B')} className={styles.btn}>B</button>
+          <button onClick={() => rubik.current.rotate('B', true)} className={styles.btn}>B'</button>
+        </div>
+        <div>
+          <button onClick={() => rubik.current.rotate('R')} className={styles.btn}>R</button>
+          <button onClick={() => rubik.current.rotate('R', true)} className={styles.btn}>R'</button>
+        </div>
+        <div>
+          <button onClick={() => rubik.current.rotate('L')} className={styles.btn}>L</button>
+          <button onClick={() => rubik.current.rotate('L', true)} className={styles.btn}>L'</button>
+        </div>
+        <div>
+          <button onClick={() => rubik.current.rotate('U')} className={styles.btn}>U</button>
+          <button onClick={() => rubik.current.rotate('U', true)} className={styles.btn}>U'</button>
+        </div>
+        <div>
+          <button onClick={() => rubik.current.rotate('D')} className={styles.btn}>D</button>
+          <button onClick={() => rubik.current.rotate('D', true)} className={styles.btn}>D'</button>
+        </div>
+        <div>
+          <button onClick={() => rubik.current.rotate('M')} className={styles.btn}>M</button>
+          <button onClick={() => rubik.current.rotate('M', true)} className={styles.btn}>M'</button>
+        </div>
+        <div>
+          <button onClick={() => rubik.current.rotate('S')} className={styles.btn}>S</button>
+          <button onClick={() => rubik.current.rotate('S', true)} className={styles.btn}>S'</button>
+        </div>
+        <div>
+          <button onClick={() => rubik.current.rotate('E')} className={styles.btn}>E</button>
+          <button onClick={() => rubik.current.rotate('E', true)} className={styles.btn}>E'</button>
+        </div>
       </div>
     </>
   )

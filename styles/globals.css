@@ -21,9 +21,12 @@ ul.menu {
   left: 50%;
   transform: translateX(-50%);
   display: flex;
+  justify-content: center;
   gap: 32px;
   margin: 32px 0;
   z-index: 1;
+  width: 70vw;
+  overflow-x: auto;
 }
 
 ul.menu li {
