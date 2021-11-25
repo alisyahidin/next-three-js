@@ -1,20 +1,33 @@
 import { proxy } from 'valtio'
 
-// https://hannuhartikainen.fi/blog/modeling-rubiks-cube/
-// [:u :f :l] [:u :l :b] [:u :b :r] [:u :r :f]              ; corners - top
-// [:d :f :l] [:d :l :b] [:d :b :r] [:d :r :f]              ; corners - bottom
-// [:u :f] [:u :l] [:u :b] [:u :r]                          ; edges - top
-// [:f :l] [:l :b] [:b :r] [:r :f]                          ; edges - middle
-// [:d :f] [:d :l] [:d :b] [:d :r]                          ; edges - bottom
-
-const fwdRing = ['U', 'F', 'L', 'D', 'B', 'R']
-
-const state = proxy([
-  'U-F-L', 'U-L-B', 'U-B-R', 'U-R-F',
-  'D-F-L', 'D-L-B', 'D-B-R', 'D-R-F',
-  'U-F', 'U-L', 'U-B', 'U-R',
-  'F-L', 'L-B', 'B-R', 'R-F',
-  'D-F', 'D-L', 'D-B', 'D-R',
-])
+const state = proxy({
+  'U-F-L': '0-2-2',
+  'U-L-B': '0-2-0',
+  'U-B-R': '2-2-0',
+  'U-R-F': '2-2-2',
+  'D-F-L': '0-0-2',
+  'D-L-B': '0-0-0',
+  'D-B-R': '2-0-0',
+  'D-R-F': '2-0-2',
+  'U-F': '1-2-2',
+  'U-L': '0-2-1',
+  'U-B': '1-2-0',
+  'U-R': '2-2-1',
+  'F-L': '0-1-2',
+  'L-B': '0-1-0',
+  'B-R': '2-1-0',
+  'R-F': '2-1-2',
+  'D-F': '1-0-2',
+  'D-L': '0-0-1',
+  'D-B': '1-0-0',
+  'D-R': '2-0-1',
+  'F-F': '1-1-2',
+  'L-L': '0-1-1',
+  'B-B': '1-1-0',
+  'R-R': '2-1-1',
+  'U-U': '1-2-1',
+  'D-D': '1-0-1',
+  'C': '1-1-1',
+})
 
 export default state

@@ -42,7 +42,7 @@ const RubikPage: NextPage = () => {
           <button onClick={() => rubik.current.rotate('D')} className={styles.btn}>D</button>
           <button onClick={() => rubik.current.rotate('D', true)} className={styles.btn}>D'</button>
         </div>
-        <div>
+        {/* <div>
           <button onClick={() => rubik.current.rotate('M')} className={styles.btn}>M</button>
           <button onClick={() => rubik.current.rotate('M', true)} className={styles.btn}>M'</button>
         </div>
@@ -53,7 +53,7 @@ const RubikPage: NextPage = () => {
         <div>
           <button onClick={() => rubik.current.rotate('E')} className={styles.btn}>E</button>
           <button onClick={() => rubik.current.rotate('E', true)} className={styles.btn}>E'</button>
-        </div>
+        </div> */}
       </div>
     </>
   )

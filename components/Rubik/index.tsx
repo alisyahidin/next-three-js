@@ -1,10 +1,9 @@
-import { useRef, useImperativeHandle, forwardRef, Fragment, useEffect } from 'react'
+import { useRef, useImperativeHandle, forwardRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Billboard, Text } from '@react-three/drei'
 import Move from './entity/move'
-import Cube, { RubikRotation, cubes, CubeTypes } from './entity/cube'
+import Cube, { RubikRotation } from './entity/cube'
 import { getBoxes, rotateAroundWorldAxis } from './helper'
-import { BackSide, MathUtils } from 'three'
+import { MathUtils } from 'three'
 
 export type RubikProps = {
   size?: number
@@ -41,56 +40,25 @@ const Rubik = forwardRef<RubikRef, RubikProps>(({ size = 3, length = 1 }, ref) =
     }
   }
 
-  const rotate = (rotation: keyof RubikRotation, inversed: boolean = false, stepAngle = defaultStepAngle): Promise<void> => {
+  const rotate = (face: keyof RubikRotation, inversed: boolean = false, stepAngle = defaultStepAngle): Promise<void> => {
     if (moveRef.current) return Promise.resolve()
 
     return new Promise<void>(resolve => {
-      moveRef.current = new Move(rotation, inversed, stepAngle)
+      moveRef.current = new Move(face, inversed, stepAngle)
 
       moveRef.current.onComplete(() => {
+        Cube.rotate(face, inversed)
         moveRef.current = undefined
         resolve()
       })
 
       moveRef.current.onProgress(move => {
         const targetSign = Math.sign(move.targetAngle)
-        rotateBoxes(rotation, stepAngle * targetSign)
+        rotateBoxes(face, stepAngle * targetSign)
       })
 
     })
   }
-
-  useEffect(() => {
-    const fwdRing = ['U', 'F', 'L', 'D', 'B', 'R']
-
-    const fwgRingOf = (face: keyof RubikRotation) => {
-      const indexFace = fwdRing.indexOf(face)
-      const oppositeIndexFace = (indexFace + 3) % fwdRing.length
-      return fwdRing.filter(f => f !== face && f !== fwdRing[oppositeIndexFace])
-    }
-
-    const piecesLocation = [
-      'U-F-L', 'U-L-B', 'U-B-R', 'U-R-F',
-      'D-F-L', 'D-L-B', 'D-B-R', 'D-R-F',
-      'U-F', 'U-L', 'U-B', 'U-R',
-      'F-L', 'L-B', 'B-R', 'R-F',
-      'D-F', 'D-L', 'D-B', 'D-R',
-    ]
-
-    const getNextRotationPiece = (face: keyof RubikRotation, piece: typeof piecesLocation[number], inversed: boolean = false) => {
-      const isEven = fwdRing.indexOf(face) % 2 === 0 && !inversed
-      const fwdRingFace = isEven ? fwgRingOf(face) : [...fwgRingOf(face)].reverse()
-      const nextFwdRingFace = (position: string) => (fwdRingFace.indexOf(position) + 1) % fwdRingFace.length
-      return piece.split('-').map(position => position === face ? position : fwdRingFace[nextFwdRingFace(position)]).join('-')
-    }
-
-    const rotate = (face: keyof RubikRotation, inversed: boolean = false) => {
-      const selectedPieces = piecesLocation.filter(item => item.includes(face))
-      console.log(face, selectedPieces.map(current => [current, getNextRotationPiece(face, current, inversed)]))
-    }
-
-    fwdRing.forEach(face => rotate(face as keyof RubikRotation, false))
-  }, [])
 
   useImperativeHandle(ref, () => ({ rotate }))
 
@@ -104,25 +72,21 @@ const Rubik = forwardRef<RubikRef, RubikProps>(({ size = 3, length = 1 }, ref) =
   return <group ref={rubik}>
     {[...Array(size)].map((_, x) =>
       [...Array(size)].map((_, y) =>
-        [...Array(size)].map((_, z) => (<Fragment key={`${x}-${y}-${z}`}>
+        [...Array(size)].map((_, z) => (
           <mesh
             name={`${x}-${y}-${z}`}
+            key={`${x}-${y}-${z}`}
             position={[(x + (x * gap) + offset) * length, (y + (y * gap) + offset) * length, (z + (z * gap) + offset) * length]}
           >
             <boxGeometry args={[length, length, length]} />
-            <meshStandardMaterial side={BackSide} transparent opacity={0.5} attachArray="material" color={x === size - 1 ? colors.right : colors.netral} />
-            <meshStandardMaterial side={BackSide} transparent opacity={0.5} attachArray="material" color={x === 0 ? colors.left : colors.netral} />
-            <meshStandardMaterial side={BackSide} transparent opacity={0.5} attachArray="material" color={y === size - 1 ? colors.up : colors.netral} />
-            <meshStandardMaterial side={BackSide} transparent opacity={0.5} attachArray="material" color={y === 0 ? colors.down : colors.netral} />
-            <meshStandardMaterial side={BackSide} transparent opacity={0.5} attachArray="material" color={z === size - 1 ? colors.front : colors.netral} />
-            <meshStandardMaterial side={BackSide} transparent opacity={0.5} attachArray="material" color={z === 0 ? colors.back : colors.netral} />
+            <meshStandardMaterial attachArray="material" color={x === size - 1 ? colors.right : colors.netral} />
+            <meshStandardMaterial attachArray="material" color={x === 0 ? colors.left : colors.netral} />
+            <meshStandardMaterial attachArray="material" color={y === size - 1 ? colors.up : colors.netral} />
+            <meshStandardMaterial attachArray="material" color={y === 0 ? colors.down : colors.netral} />
+            <meshStandardMaterial attachArray="material" color={z === size - 1 ? colors.front : colors.netral} />
+            <meshStandardMaterial attachArray="material" color={z === 0 ? colors.back : colors.netral} />
           </mesh>
-          <Billboard follow position={[(x + (x * gap) + offset) * length, (y + (y * gap) + offset) * length, (z + (z * gap) + offset) * length]}>
-            <Text fontSize={0.2} outlineWidth={'5%'} outlineColor="#000000" outlineOpacity={1}>
-              {`${x}-${y}-${z}`}
-            </Text>
-          </Billboard>
-        </Fragment>))
+        ))
       )
     )}
   </group>
