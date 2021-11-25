@@ -10,11 +10,11 @@ const RubikPage: NextPage = () => {
 
   return (
     <>
-      <Canvas style={{ height: '100vh' }}>
+      <Canvas gl={{ pixelRatio: typeof window !== 'undefined' ? window.devicePixelRatio * 5 : 2 }} style={{ height: '100vh' }}>
         <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} maxDistance={15} minDistance={3} />
         <ambientLight />
         <axesHelper scale={6} position={[0, 0, 0]} />
-        <Rubik ref={rubik} size={3} length={0.5} />
+        <Rubik ref={rubik} length={0.5} />
         <Stats />
       </Canvas>
       <div className={styles['button-action']}>
