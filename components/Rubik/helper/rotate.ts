@@ -3,7 +3,7 @@ import state from "../state"
 
 const fwdRing = ['U', 'F', 'L', 'D', 'B', 'R']
 
-const fwgRingOf = (face: keyof RubikRotation) => {
+const fwdRingOf = (face: keyof RubikRotation) => {
   const indexFace = fwdRing.indexOf(face)
   const oppositeIndexFace = (indexFace + 3) % fwdRing.length
   return fwdRing.filter(f => f !== face && f !== fwdRing[oppositeIndexFace])
@@ -25,8 +25,8 @@ const piecesLocation = [
 ]
 
 const getNextRotationPiece = (face: keyof RubikRotation, piece: typeof piecesLocation[number], inversed: boolean = false) => {
-  const isEven = fwdRing.indexOf(face) % 2 === 0 && !inversed
-  const fwdRingFace = isEven ? fwgRingOf(face) : [...fwgRingOf(face)].reverse()
+  const isEven = fwdRing.indexOf(face) % 2 === 0
+  const fwdRingFace = isEven ? fwdRingOf(face) : [...fwdRingOf(face)].reverse()
   const nextFwdRingFace = (position: string) => (fwdRingFace.indexOf(position) + 1) % fwdRingFace.length
   const nextRotate = piece.split('-')
     .map(position => position === face

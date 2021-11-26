@@ -19,8 +19,20 @@ const RubikPage: NextPage = () => {
       </Canvas>
       <div className={styles['button-action']}>
         <div>
+          <button onClick={() => rubik.current.rotate('U')} className={styles.btn}>U</button>
+          <button onClick={() => rubik.current.rotate('U', true)} className={styles.btn}>U'</button>
+        </div>
+        <div>
           <button onClick={() => rubik.current.rotate('F')} className={styles.btn}>F</button>
           <button onClick={() => rubik.current.rotate('F', true)} className={styles.btn}>F'</button>
+        </div>
+        <div>
+          <button onClick={() => rubik.current.rotate('L')} className={styles.btn}>L</button>
+          <button onClick={() => rubik.current.rotate('L', true)} className={styles.btn}>L'</button>
+        </div>
+        <div>
+          <button onClick={() => rubik.current.rotate('D')} className={styles.btn}>D</button>
+          <button onClick={() => rubik.current.rotate('D', true)} className={styles.btn}>D'</button>
         </div>
         <div>
           <button onClick={() => rubik.current.rotate('B')} className={styles.btn}>B</button>
@@ -29,18 +41,6 @@ const RubikPage: NextPage = () => {
         <div>
           <button onClick={() => rubik.current.rotate('R')} className={styles.btn}>R</button>
           <button onClick={() => rubik.current.rotate('R', true)} className={styles.btn}>R'</button>
-        </div>
-        <div>
-          <button onClick={() => rubik.current.rotate('L')} className={styles.btn}>L</button>
-          <button onClick={() => rubik.current.rotate('L', true)} className={styles.btn}>L'</button>
-        </div>
-        <div>
-          <button onClick={() => rubik.current.rotate('U')} className={styles.btn}>U</button>
-          <button onClick={() => rubik.current.rotate('U', true)} className={styles.btn}>U'</button>
-        </div>
-        <div>
-          <button onClick={() => rubik.current.rotate('D')} className={styles.btn}>D</button>
-          <button onClick={() => rubik.current.rotate('D', true)} className={styles.btn}>D'</button>
         </div>
         {/* <div>
           <button onClick={() => rubik.current.rotate('M')} className={styles.btn}>M</button>

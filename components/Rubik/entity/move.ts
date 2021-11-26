@@ -19,8 +19,8 @@ export default class Move {
     this.stepAngle = stepAngle
     this.currentAngle = 0
     this.targetAngle = inversed
-      ? Cube.angles.CLOCKWISE
-      : Cube.angles.COUNTERCLOCKWISE
+      ? Cube.angles.COUNTERCLOCKWISE
+      : Cube.angles.CLOCKWISE
   }
 
   onComplete(callback: () => void) {
