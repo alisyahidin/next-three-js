@@ -28,8 +28,8 @@ export function getBoxes(objects: Object3D[], face: keyof RubikRotation): Object
   if (face === 'L') return objects.filter(cube => rotationPieces.includes(cube.name))
   if (face === 'U') return objects.filter(cube => rotationPieces.includes(cube.name))
   if (face === 'D') return objects.filter(cube => rotationPieces.includes(cube.name))
-  if (face === 'M') return objects.filter(cube => rotationPieces.includes(cube.name))
-  if (face === 'S') return objects.filter(cube => rotationPieces.includes(cube.name))
-  if (face === 'E') return objects.filter(cube => rotationPieces.includes(cube.name))
+  // if (face === 'M') return objects.filter(cube => rotationPieces.includes(cube.name))
+  // if (face === 'S') return objects.filter(cube => rotationPieces.includes(cube.name))
+  // if (face === 'E') return objects.filter(cube => rotationPieces.includes(cube.name))
   return objects
 }
