@@ -27,6 +27,8 @@ ul.menu {
   z-index: 1;
   width: 70vw;
   overflow-x: auto;
+  background-color: red;
+  filter: invert(100%);
 }
 
 ul.menu li {

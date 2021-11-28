@@ -38,6 +38,10 @@ const menus = [
     title: 'Rubik',
     path: '/rubik',
   },
+  {
+    title: 'Points',
+    path: '/points',
+  },
 ]
 
 const Menu = () => {
