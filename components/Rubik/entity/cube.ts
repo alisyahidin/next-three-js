@@ -1,4 +1,5 @@
 import { Vector3 } from "three"
+import { getInitialState } from "../helper"
 import rotate from "../helper/rotate"
 
 export type RubikRotation = {
@@ -14,6 +15,9 @@ export type RubikRotation = {
 }
 
 export default class Cube {
+  size: number
+  state: any
+
   static angles = {
     CLOCKWISE: 90,
     COUNTERCLOCKWISE: -90
@@ -38,4 +42,9 @@ export default class Cube {
   }
 
   static rotate = rotate
+
+  constructor(size: number) {
+    this.size = size
+    this.state = getInitialState(size)
+  }
 }
