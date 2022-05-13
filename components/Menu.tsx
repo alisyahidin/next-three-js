@@ -42,6 +42,10 @@ const menus = [
     title: 'Points',
     path: '/points',
   },
+  {
+    title: 'Car',
+    path: '/car',
+  },
 ]
 
 const Menu = () => {
