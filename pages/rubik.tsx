@@ -20,39 +20,39 @@ const RubikPage: NextPage = () => {
       <div className={styles['button-action']}>
         <div>
           <button onClick={() => rubik.current.rotate('U')} className={styles.btn}>U</button>
-          <button onClick={() => rubik.current.rotate('U', true)} className={styles.btn}>U'</button>
+          <button onClick={() => rubik.current.rotate('U', true)} className={styles.btn}>U&apos;</button>
         </div>
         <div>
           <button onClick={() => rubik.current.rotate('F')} className={styles.btn}>F</button>
-          <button onClick={() => rubik.current.rotate('F', true)} className={styles.btn}>F'</button>
+          <button onClick={() => rubik.current.rotate('F', true)} className={styles.btn}>F&apos;</button>
         </div>
         <div>
           <button onClick={() => rubik.current.rotate('L')} className={styles.btn}>L</button>
-          <button onClick={() => rubik.current.rotate('L', true)} className={styles.btn}>L'</button>
+          <button onClick={() => rubik.current.rotate('L', true)} className={styles.btn}>L&apos;</button>
         </div>
         <div>
           <button onClick={() => rubik.current.rotate('D')} className={styles.btn}>D</button>
-          <button onClick={() => rubik.current.rotate('D', true)} className={styles.btn}>D'</button>
+          <button onClick={() => rubik.current.rotate('D', true)} className={styles.btn}>D&apos;</button>
         </div>
         <div>
           <button onClick={() => rubik.current.rotate('B')} className={styles.btn}>B</button>
-          <button onClick={() => rubik.current.rotate('B', true)} className={styles.btn}>B'</button>
+          <button onClick={() => rubik.current.rotate('B', true)} className={styles.btn}>B&apos;</button>
         </div>
         <div>
           <button onClick={() => rubik.current.rotate('R')} className={styles.btn}>R</button>
-          <button onClick={() => rubik.current.rotate('R', true)} className={styles.btn}>R'</button>
+          <button onClick={() => rubik.current.rotate('R', true)} className={styles.btn}>R&apos;</button>
         </div>
         {/* <div>
           <button onClick={() => rubik.current.rotate('M')} className={styles.btn}>M</button>
-          <button onClick={() => rubik.current.rotate('M', true)} className={styles.btn}>M'</button>
+          <button onClick={() => rubik.current.rotate('M', true)} className={styles.btn}>M&apos;</button>
         </div>
         <div>
           <button onClick={() => rubik.current.rotate('S')} className={styles.btn}>S</button>
-          <button onClick={() => rubik.current.rotate('S', true)} className={styles.btn}>S'</button>
+          <button onClick={() => rubik.current.rotate('S', true)} className={styles.btn}>S&apos;</button>
         </div>
         <div>
           <button onClick={() => rubik.current.rotate('E')} className={styles.btn}>E</button>
-          <button onClick={() => rubik.current.rotate('E', true)} className={styles.btn}>E'</button>
+          <button onClick={() => rubik.current.rotate('E', true)} className={styles.btn}>E&apos;</button>
         </div> */}
       </div>
     </>

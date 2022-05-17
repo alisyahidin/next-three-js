@@ -1,4 +1,4 @@
-import { useRef, useImperativeHandle, forwardRef, useEffect } from 'react'
+import { useRef, useImperativeHandle, forwardRef, useEffect, useCallback } from 'react'
 import { useFrame } from '@react-three/fiber'
 import Move from './entity/move'
 import Cube, { RubikRotation } from './entity/cube'
@@ -40,7 +40,7 @@ const Rubik = forwardRef<RubikRef, RubikProps>(({ size = 3, length = 1 }, ref) =
     }
   }
 
-  const rotate = (face: keyof RubikRotation, inversed: boolean = false, stepAngle = defaultStepAngle): Promise<void> => {
+  const rotate = useCallback((face: keyof RubikRotation, inversed: boolean = false, stepAngle = defaultStepAngle): Promise<void> => {
     if (moveRef.current) return Promise.resolve()
 
     return new Promise<void>(resolve => {
@@ -58,7 +58,7 @@ const Rubik = forwardRef<RubikRef, RubikProps>(({ size = 3, length = 1 }, ref) =
       })
 
     })
-  }
+  }, [])
 
   useEffect(() => {
     const listenToKeyboard = (e: KeyboardEvent) => {
@@ -68,7 +68,7 @@ const Rubik = forwardRef<RubikRef, RubikProps>(({ size = 3, length = 1 }, ref) =
 
     window.addEventListener('keypress', listenToKeyboard)
     return () => window.removeEventListener('keypress', listenToKeyboard)
-  }, [])
+  }, [rotate])
 
   useImperativeHandle(ref, () => ({ rotate }))
 
@@ -77,6 +77,7 @@ const Rubik = forwardRef<RubikRef, RubikProps>(({ size = 3, length = 1 }, ref) =
   const gap = length / 10
   const offset = (-size / 2) + 0.5 - gap
 
+  // @ts-ignore
   return <group ref={rubik}>
     {[...Array(size)].map((_, x) =>
       [...Array(size)].map((_, y) =>
@@ -87,17 +88,19 @@ const Rubik = forwardRef<RubikRef, RubikProps>(({ size = 3, length = 1 }, ref) =
             position={[(x + (x * gap) + offset) * length, (y + (y * gap) + offset) * length, (z + (z * gap) + offset) * length]}
           >
             <boxGeometry args={[length, length, length]} />
-            <meshStandardMaterial attachArray="material" color={x === size - 1 ? colors.right : colors.netral} />
-            <meshStandardMaterial attachArray="material" color={x === 0 ? colors.left : colors.netral} />
-            <meshStandardMaterial attachArray="material" color={y === size - 1 ? colors.up : colors.netral} />
-            <meshStandardMaterial attachArray="material" color={y === 0 ? colors.down : colors.netral} />
-            <meshStandardMaterial attachArray="material" color={z === size - 1 ? colors.front : colors.netral} />
-            <meshStandardMaterial attachArray="material" color={z === 0 ? colors.back : colors.netral} />
+            <meshStandardMaterial color={x === size - 1 ? colors.right : colors.netral} />
+            <meshStandardMaterial color={x === 0 ? colors.left : colors.netral} />
+            <meshStandardMaterial color={y === size - 1 ? colors.up : colors.netral} />
+            <meshStandardMaterial color={y === 0 ? colors.down : colors.netral} />
+            <meshStandardMaterial color={z === size - 1 ? colors.front : colors.netral} />
+            <meshStandardMaterial color={z === 0 ? colors.back : colors.netral} />
           </mesh>
         ))
       )
     )}
   </group>
 })
+
+Rubik.displayName = 'Rubik Component'
 
 export default Rubik

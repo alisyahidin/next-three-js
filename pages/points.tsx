@@ -27,7 +27,7 @@ const Points: FC = () => {
       }
     }
     return new Float32Array(positions)
-  }, [count, sep, graph])
+  }, [count, sep])
 
   useFrame(() => {
     t += 15
@@ -40,6 +40,7 @@ const Points: FC = () => {
         let x = sep * (xi - count / 2);
         let z = sep * (zi - count / 2);
 
+        // @ts-ignore
         positions[i + 1] = graph(x, z);
         i += 3;
       }
@@ -53,6 +54,7 @@ const Points: FC = () => {
       <bufferGeometry>
         <bufferAttribute
           ref={bufferRef}
+          // @ts-ignore
           attachObject={['attributes', 'position']}
           array={position}
           count={position.length / 3}

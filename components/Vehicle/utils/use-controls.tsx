@@ -10,7 +10,7 @@ export function useKeyPress(target, event) {
       window.removeEventListener('keydown', downHandler)
       window.removeEventListener('keyup', upHandler)
     }
-  }, [])
+  }, [event, target])
 }
 
 export function useControls() {

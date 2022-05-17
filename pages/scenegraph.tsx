@@ -1,10 +1,10 @@
-import { FC } from 'react'
+import { FC, PropsWithChildren } from 'react'
 import type { NextPage } from 'next'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Stats } from '@react-three/drei'
 import { useRef } from 'react'
 
-const Orbit: FC<{ position?: [number, number, number] }> = ({ children, position }) => {
+const Orbit: FC<PropsWithChildren<{ position?: [number, number, number] }>> = ({ children, position }) => {
   const mesh = useRef<THREE.Mesh>(null!)
   useFrame(() => {
     mesh.current.rotation.y += 0.01
@@ -17,13 +17,13 @@ const Orbit: FC<{ position?: [number, number, number] }> = ({ children, position
   )
 }
 
-type PlanetProps = {
+type PlanetProps = PropsWithChildren<{
   time: number
   color: string
   args: [number, number, number]
   scale?: [number, number, number]
   position: [number, number, number]
-}
+}>
 
 const BasicPlanet: FC<PlanetProps> = ({ time = 0.01, color = 0x038cfc, args, scale, position, children }) => {
   const mesh = useRef<THREE.Mesh>(null!)
@@ -40,7 +40,7 @@ const BasicPlanet: FC<PlanetProps> = ({ time = 0.01, color = 0x038cfc, args, sca
   )
 }
 
-const Earth: FC<{ materialProps?: any }> = ({ children, materialProps }) => {
+const Earth: FC<PropsWithChildren<{ materialProps?: any }>> = ({ children }) => {
   const mesh = useRef<THREE.Mesh>(null!)
   useFrame(() => {
     mesh.current.rotation.y += 0.03

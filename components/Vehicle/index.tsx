@@ -37,6 +37,7 @@ function Vehicle({ radius = 0.7, width = 1.2, height = -0.04, front = 1.3, back 
   const [vehicle, api] = useRaycastVehicle(() => ({
     chassisBody: chassis,
     wheels: [wheel1, wheel2, wheel3, wheel4],
+    // @ts-ignore
     wheelInfos: [wheelInfo1, wheelInfo2, wheelInfo3, wheelInfo4],
     indexForwardAxis: 2,
     indexRightAxis: 0,
@@ -49,19 +50,29 @@ function Vehicle({ radius = 0.7, width = 1.2, height = -0.04, front = 1.3, back 
     for (let s = 0; s < 2; s++) api.setSteeringValue(left || right ? steer * (left && !right ? 1 : -1) : 0, s)
     for (let b = 2; b < 4; b++) api.setBrake(brake ? maxBrake : 0, b)
     if (reset) {
+      // @ts-ignore
       chassis.current.api.position.set(0, 0.5, 0)
+      // @ts-ignore
       chassis.current.api.velocity.set(0, 0, 0)
+      // @ts-ignore
       chassis.current.api.angularVelocity.set(0, 0.5, 0)
+      // @ts-ignore
       chassis.current.api.rotation.set(0, -Math.PI / 4, 0)
     }
   })
 
   return (
+    // @ts-ignore
     <group ref={vehicle} position={[0, -0.4, 0]}>
+      {/* @ts-ignore*/}
       <Beetle ref={chassis} rotation={props.rotation} position={props.position} angularVelocity={props.angularVelocity} />
+      {/* @ts-ignore*/}
       <Wheel ref={wheel1} radius={radius} leftSide />
+      {/* @ts-ignore*/}
       <Wheel ref={wheel2} radius={radius} />
+      {/* @ts-ignore*/}
       <Wheel ref={wheel3} radius={radius} leftSide />
+      {/* @ts-ignore*/}
       <Wheel ref={wheel4} radius={radius} />
     </group>
   )

@@ -19,6 +19,7 @@ const Box: FC<MeshProps> = props => {
   })
 
   return (
+    // @ts-ignore
     <animated.mesh ref={box} onClick={handleClick} scale={scale} {...props}>
       <boxGeometry args={[1, 1, 1]} />
       <meshStandardMaterial flatShading color={0x0000FF} />
